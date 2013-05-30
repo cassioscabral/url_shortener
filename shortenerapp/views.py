@@ -9,17 +9,17 @@ from django.http import HttpResponse
 
 def index(request):
     link = "soda/"
+    if request.is_ajax():
+        if request.method == 'POST':
+            #salva nova url
+            url_original = request.POST['url_original']
+            
 
-    if request.method == 'POST':
-        #salva nova url
-        url_original = request.POST['url_original']
+            url = Url()
         
-
-        url = Url()
-    
-        url.url_original = url_original
-        url.url_modificada = link + modifica_url(url_original)
-        url.save()
+            url.url_original = url_original
+            url.url_modificada = link + modifica_url(url_original)
+            url.save()
        
     #exibe as urls
     urls = Url.objects.order_by('-id')

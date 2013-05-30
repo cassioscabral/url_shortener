@@ -3,10 +3,28 @@
 <html>
   <head>
     <title>URLshort</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script> 
+        // prepare the form when the DOM is ready 
+        $(document).ready(function() { 
+            // bind form using ajaxForm 
+            $('#formUrl').ajaxForm({ 
+                // target identifies the element(s) to update with the server response 
+                target: 'html', 
+         
+                // success identifies the function to invoke when the server response 
+                // has been received; here we apply a fade-in effect to the new content 
+                success: function() { 
+                    $('body').fadeIn('slow'); 
+                } 
+            }); 
+        });
+    </script> 
   </head> 
   <body>
     <h1>Encurtador de url</h1>
-    <form method="post" action="http://127.0.0.1:8000/">
+    <form id="formUrl" method="post" action="http://127.0.0.1:8000/">
       {% csrf_token %}
       <ul>
         <li>
@@ -18,11 +36,13 @@
       </ul>
     </form>
     <h2>Urls cadastradas</h2>
+    <div id="listagem_urls" >
     {% for url in Urls %}
-    <div>
+    <div id="umaUrl" class="url">
       <span> Url original: <strong>{{ url.url_original }}</strong> </span><br>
       <a href="{{ url.get_absolute_url }}" target="_blank">{{ url.url_modificada }}</a><br><br>
        {{ request.get_full_path }}
+    </div>
     {% endfor %}
   </div>
   </body>

@@ -1,6 +1,6 @@
 #coding: utf-8
 from nose.plugins.skip import SkipTest
- 
+from shortenerapp.models import Url
 from mongoengine.python_support import PY3
 from mongoengine import connect
  
@@ -33,12 +33,13 @@ class MongoTestCase(TestCase):
         super(MongoTestCase, self)._pre_setup()
 
     def setUp(self):
-        Url.objects.create(url_original="https://www.google.com.br/")
-        num_caracteres_link = "soda/".count #5 caracteres, padrao da url reduzida sao 6 caracteres
+
+        google = Url(url_original="https://www.google.com.br/")
+        google.save
+        tamanho_maximo_url_reduzida = 11 #5 caracteres da string 'soda/', padrao da url reduzida sao 6 caracteres, no maximo a url deve ter 5 + 6 == 11 caracteres
 
     def test_numero_de_letras(self):
-        google = Url.objects.get(name="https://www.google.com.br/")
-        self.assertEqual(google.url_modificada.count, num_caracteres_link+6)
+        self.assertEqual(str.count(google.url_modificada), tamanho_maximo_url_reduzida)
  
     def _post_teardown(self):
         from mongoengine.connection import get_connection, disconnect
