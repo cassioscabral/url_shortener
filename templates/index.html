@@ -7,7 +7,22 @@
     <script src="http://malsup.github.com/jquery.form.js"></script> 
     <script> 
         // prepare the form when the DOM is ready 
-       
+       $(document).ready(function() { 
+            // bind form using ajaxForm 
+            $('#formUrl').ajaxForm({ 
+                // target identifies the element(s) to update with the server response 
+                target: 'html', 
+         
+                // success identifies the function to invoke when the server response 
+                // has been received; here we apply a fade-in effect to the new content 
+                success: function() { 
+                    $(this).ajaxSubmit();
+                    $('html').fadeIn('slow'); 
+                }
+
+               
+            }); 
+        });
     </script> 
   </head> 
   <body>
