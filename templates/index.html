@@ -1,0 +1,29 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>URLshort</title>
+  </head> 
+  <body>
+    <h1>Encurtador de url</h1>
+    <form method="post" action="http://127.0.0.1:8000/">
+      {% csrf_token %}
+      <ul>
+        <li>
+          <input type="text" name="url_original" placeholder="Url original" required>
+        </li>
+        <li>
+          <input type="submit" value="Adicionar url">
+        </li>
+      </ul>
+    </form>
+    <h2>Urls cadastradas</h2>
+    {% for url in Urls %}
+    <div>
+      <span> Url original: <strong>{{ url.url_original }}</strong> </span><br>
+      <a href="{{ url.get_absolute_url }}" target="_blank">{{ url.url_modificada }}</a><br><br>
+       {{ request.get_full_path }}
+    {% endfor %}
+  </div>
+  </body>
+</html>
