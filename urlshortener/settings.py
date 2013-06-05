@@ -19,9 +19,9 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dummy', 
-                   
-    }
+      'ENGINE': 'django_mongodb_engine',
+      'NAME': DBNAME
+   }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False

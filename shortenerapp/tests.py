@@ -13,7 +13,6 @@ def get_db(db_name=None):
                 (db_name or settings.MONGO_DBNAME)]
 
 class MyTestCase(TestCase):
-    fixtures = ['test_data.json']
     def setUp(self):
         self.db = get_db('test')
         self.db.create_collection('mytestcollection')
